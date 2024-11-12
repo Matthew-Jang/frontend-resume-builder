@@ -1,118 +1,105 @@
 <script setup>
+import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import ocLogo from "/oc-logo-white.png";
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import Utils from "../config/utils";
-import AuthServices from "../services/authServices";
 
 const router = useRouter();
-const user = ref(null);
-const title = ref("Resume Builder");
-const initials = ref("");
-const name = ref("");
-const logoURL = ref("");
+const route = useRoute();
+const logoURL = ref(ocLogo);
 
+// Define the menu items
 const menuItems = [
-  "Templates",
-  "Profile",
-  "Experience",
-  "Skills",
-  "Education",
-  "Contact",
-  "References",
-  "Confirm",
+  { name: "Templates", path: "/templates" },
+  { name: "Profile", path: "/profile" },
+  { name: "Experience", path: "/experience" },
+  { name: "Skills", path: "/skills" },
+  { name: "Education", path: "/education" },
+  { name: "Contact", path: "/contact" },
+  { name: "References", path: "/references" },
+  { name: "Confirm", path: "/confirm" },
 ];
 
-const resetMenu = () => {
-  user.value = null;
-  user.value = Utils.getStore("user");
-  if (user.value) {
-    initials.value = user.value.fName[0] + user.value.lName[0];
-    name.value = user.value.fName + " " + user.value.lName;
-  }
-};
+// Check if the current route matches the item path
+const isActive = (path) => route.path === path;
 
-const logout = () => {
-  AuthServices.logoutUser(user.value)
-    .then((response) => {
-      console.log(response);
-      Utils.removeItem("user");
-      router.push({ name: "login" });
-    })
-    .catch((error) => {
-      console.log("error", error);
-    });
+const navigate = (path) => {
+  router.push(path);
 };
-
-const navigate = (item) => {
-  router.push(`/${item.toLowerCase()}`);
-};
-
-onMounted(() => {
-  logoURL.value = ocLogo;
-  resetMenu();
-});
 </script>
 
 <template>
-  <div>
-    <v-app-bar app color="white">
-      <!-- Logo Link -->
+  <v-app-bar app color="white" dense class="navbar">
+    <!-- Centered Content -->
+    <div class="nav-content">
+      <!-- Logo -->
       <router-link :to="{ name: 'home' }">
-        <v-img class="mx-2" :src="logoURL" height="50" width="50" contain></v-img>
+        <v-img class="mx-2" :src="logoURL" height="40" width="40" contain></v-img>
       </router-link>
 
       <!-- Title -->
       <v-toolbar-title class="title">
-        {{ title }}
+        Resume Builder
       </v-toolbar-title>
 
-      <v-spacer></v-spacer>
-
-      <!-- Menu Items -->
-      <div v-if="user">
+      <!-- Navigation Items -->
+      <div class="nav-menu">
         <v-btn
           v-for="item in menuItems"
-          :key="item"
+          :key="item.name"
+          :class="['nav-item', { active: isActive(item.path) }]"
+          @click="navigate(item.path)"
           text
-          class="mx-2"
-          @click="navigate(item)"
         >
-          {{ item }}
+          {{ item.name }}
         </v-btn>
       </div>
-
-      <!-- User Menu -->
-      <v-menu bottom min-width="200px" rounded offset-y v-if="user">
-        <template v-slot:activator="{ props }">
-          <v-btn v-bind="props" icon x-large>
-            <v-avatar color="secondary">
-              <span class="accent--text font-weight-bold">{{ initials }}</span>
-            </v-avatar>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-text>
-            <div class="mx-auto text-center">
-              <v-avatar color="secondary" class="mt-2 mb-2">
-                <span class="accent--text font-weight-bold">{{ initials }}</span>
-              </v-avatar>
-              <h3>{{ name }}</h3>
-              <p class="text-caption mt-1">
-                {{ user.email }}
-              </p>
-              <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text @click="logout"> Logout </v-btn>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-menu>
-    </v-app-bar>
-  </div>
+    </div>
+  </v-app-bar>
 </template>
 
 <style scoped>
-.v-app-bar {
+/* Center the app bar content */
+.navbar {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+/* Center content within the navbar and apply max width */
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px; /* Adjust max-width as needed */
+  width: 100%;
+}
+
+/* Title styling */
+.title {
+  font-weight: bold;
   color: #9d6cff;
+}
+
+/* Navigation menu styling */
+.nav-menu {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Nav items with active state */
+.nav-item {
+  color: #9d6cff;
+  font-weight: bold;
+  border: 2px solid #e3d3ff;
+  border-radius: 8px;
+  padding: 5px 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item.active {
+  background-color: #e1c8ff;
+  border-color: #9d6cff;
+  color: #ffffff;
 }
 </style>

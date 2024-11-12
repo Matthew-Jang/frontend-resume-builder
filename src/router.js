@@ -13,20 +13,25 @@ import ProfileStep from "./views/ProfileStep.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: "/",
-      alias: "/login",
-      name: "login",
-      component: Login,
-    },
+    //{
+   //   path: "/",
+   //   alias: "/login",
+   //   name: "login",
+   //   component: Login,
+   // },
     {
       path: "/tutorials",
       name: "tutorials",
       component: TutorialsList,
     },
     {
-      path: "/profile",
-      name: "profileStep",
+      path: '/',
+      name: 'home', // This defines the "home" route
+      component: ProfileStep,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
       component: ProfileStep,
     },
     {
