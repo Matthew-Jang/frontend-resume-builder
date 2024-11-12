@@ -1,12 +1,15 @@
 <script setup>
 // Import the MenuBar component
 import MenuBar from "./components/MenuBar.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <template>
   <v-app>
-    <!-- Top Navigation Bar -->
-    <MenuBar />
+    <!-- Conditionally render the MenuBar only on non-homepage routes -->
+    <MenuBar v-if="route.path !== '/'" />
 
     <!-- Main Content Area -->
     <v-main>

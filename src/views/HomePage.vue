@@ -9,11 +9,10 @@ const navigateTo = (path) => {
 </script>
 
 <template>
-  <!-- Navigation Bar -->
-  <v-app-bar app color="white" dense class="navbar">
+  <!-- Custom Navbar for Homepage -->
+  <v-app-bar app color="white" dense class="homepage-navbar">
     <div class="nav-menu">
       <v-btn text @click="navigateTo('/dashboard')" class="nav-item">Dashboard</v-btn>
-      <v-btn text @click="navigateTo('/login')" class="nav-item">Login/Signup</v-btn>
     </div>
     <v-spacer></v-spacer>
     <v-btn
@@ -28,14 +27,16 @@ const navigateTo = (path) => {
   <!-- Main Content -->
   <div class="homepage-content">
     <h1>Build a resume in 8 easy steps!</h1>
-    <v-btn class="create-resume-button" @click="navigateTo('/create-resume')">Create Resume</v-btn>
-    <v-btn class="your-resumes-button" outlined @click="navigateTo('/your-resumes')">Your Resumes</v-btn>
+    <div class="buttons-container">
+      <v-btn class="create-resume-button" @click="navigateTo('/create-resume')">Create Resume</v-btn>
+      <v-btn class="your-resumes-button" outlined @click="navigateTo('/your-resumes')">Your Resumes</v-btn>
+    </div>
   </div>
 </template>
 
 <style scoped>
 /* Navbar styling for homepage */
-.navbar {
+.homepage-navbar {
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
@@ -73,7 +74,7 @@ const navigateTo = (path) => {
 /* Main content styling */
 .homepage-content {
   text-align: center;
-  margin-top: 4rem;
+  margin-top: 6rem;
   color: #9d6cff;
 }
 
@@ -84,15 +85,30 @@ const navigateTo = (path) => {
   margin-bottom: 2rem;
 }
 
-/* Buttons */
-.create-resume-button {
-  background-color: #9d6cff;
-  color: white;
+/* Center buttons and stack vertically */
+.buttons-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center;    /* Center buttons horizontally */
+  gap: 1rem;              /* Space between buttons */
+}
+
+/* Button styling */
+.create-resume-button, .your-resumes-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 25px;
   padding: 0.8rem 2rem;
   font-size: 1.2rem;
-  margin-bottom: 1rem;
   font-weight: bold;
+  width: 200px; /* Ensure buttons are the same width */
+}
+
+/* Specific styling for Create Resume button */
+.create-resume-button {
+  background-color: #9d6cff;
+  color: white;
   transition: background-color 0.3s;
 }
 
@@ -100,12 +116,9 @@ const navigateTo = (path) => {
   background-color: #7b4fcf;
 }
 
+/* Specific styling for Your Resumes button */
 .your-resumes-button {
   color: #9d6cff;
   background-color: #f3e8ff;
-  border-radius: 25px;
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-  font-weight: bold;
 }
 </style>
