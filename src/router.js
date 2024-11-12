@@ -10,6 +10,7 @@ import AddLesson from "./views/AddLesson.vue";
 import EditLesson from "./views/EditLesson.vue";
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
+import LoginSignup from "./views/LoginSignup.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,8 +28,14 @@ const router = createRouter({
     },
     {
       path: '/',
+      alias: '/home',
       name: 'home', // This defines the "home" route
       component: HomePage,
+    },
+    {
+      path: '/login',
+      name: 'login', // This defines the "home" route
+      component: LoginSignup,
     },
     {
       path: '/profile',
