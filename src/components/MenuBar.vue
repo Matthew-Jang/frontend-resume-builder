@@ -1,14 +1,27 @@
 <script setup>
 import ocLogo from "/oc-logo-white.png";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
 
+const router = useRouter();
 const user = ref(null);
-const title = ref("Tutorials");
+const title = ref("Resume Builder");
 const initials = ref("");
 const name = ref("");
 const logoURL = ref("");
+
+const menuItems = [
+  "Templates",
+  "Profile",
+  "Experience",
+  "Skills",
+  "Education",
+  "Contact",
+  "References",
+  "Confirm",
+];
 
 const resetMenu = () => {
   user.value = null;
@@ -24,11 +37,15 @@ const logout = () => {
     .then((response) => {
       console.log(response);
       Utils.removeItem("user");
-      $router.push({ name: "login" });
+      router.push({ name: "login" });
     })
     .catch((error) => {
       console.log("error", error);
     });
+};
+
+const navigate = (item) => {
+  router.push(`/${item.toLowerCase()}`);
 };
 
 onMounted(() => {
@@ -39,28 +56,37 @@ onMounted(() => {
 
 <template>
   <div>
-    <v-app-bar app>
-      <router-link :to="{ name: 'tutorials' }">
-        <v-img
-          class="mx-2"
-          :src="logoURL"
-          height="50"
-          width="50"
-          contain
-        ></v-img>
+    <v-app-bar app color="white">
+      <!-- Logo Link -->
+      <router-link :to="{ name: 'home' }">
+        <v-img class="mx-2" :src="logoURL" height="50" width="50" contain></v-img>
       </router-link>
+
+      <!-- Title -->
       <v-toolbar-title class="title">
         {{ title }}
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
+
+      <!-- Menu Items -->
       <div v-if="user">
-        <v-btn class="mx-2" :to="{ name: 'tutorials' }"> List </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'add' }"> Add Tutorial </v-btn>
+        <v-btn
+          v-for="item in menuItems"
+          :key="item"
+          text
+          class="mx-2"
+          @click="navigate(item)"
+        >
+          {{ item }}
+        </v-btn>
       </div>
+
+      <!-- User Menu -->
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props" icon x-large>
-            <v-avatar v-if="user" color="secondary">
+            <v-avatar color="secondary">
               <span class="accent--text font-weight-bold">{{ initials }}</span>
             </v-avatar>
           </v-btn>
@@ -69,9 +95,7 @@ onMounted(() => {
           <v-card-text>
             <div class="mx-auto text-center">
               <v-avatar color="secondary" class="mt-2 mb-2">
-                <span class="accent--text font-weight-bold">{{
-                  initials
-                }}</span>
+                <span class="accent--text font-weight-bold">{{ initials }}</span>
               </v-avatar>
               <h3>{{ name }}</h3>
               <p class="text-caption mt-1">
@@ -86,3 +110,9 @@ onMounted(() => {
     </v-app-bar>
   </div>
 </template>
+
+<style scoped>
+.v-app-bar {
+  color: #9d6cff;
+}
+</style>

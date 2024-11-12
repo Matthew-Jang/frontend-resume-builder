@@ -1,14 +1,37 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+// Import the MenuBar component
 import MenuBar from "./components/MenuBar.vue";
 </script>
 
 <template>
   <v-app>
-    <MenuBar :key="$route.fullPath" />
+    <!-- Top Navigation Bar -->
+    <MenuBar />
+
+    <!-- Main Content Area -->
     <v-main>
-      <router-view />
+      <v-container class="py-4" max-width="800px">
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>
+
+<style scoped>
+/* Ensure the app layout takes full height */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.v-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.v-container {
+  margin-top: 20px;
+}
+</style>
