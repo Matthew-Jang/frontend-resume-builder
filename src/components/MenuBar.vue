@@ -1,11 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import ocLogo from "/oc-logo-white.png";
 
 const router = useRouter();
 const route = useRoute();
-const logoURL = ref(ocLogo);
 
 // Define the menu items
 const menuItems = [
@@ -29,65 +27,40 @@ const navigate = (path) => {
 
 <template>
   <v-app-bar app color="white" dense class="navbar">
-    <!-- Centered Content -->
-    <div class="nav-content">
-      <!-- Logo -->
-      <router-link :to="{ name: 'home' }">
-        <v-img class="mx-2" :src="logoURL" height="40" width="40" contain></v-img>
-      </router-link>
-
-      <!-- Title -->
-      <v-toolbar-title class="title">
-        Resume Builder
-      </v-toolbar-title>
-
-      <!-- Navigation Items -->
-      <div class="nav-menu">
-        <v-btn
-          v-for="item in menuItems"
-          :key="item.name"
-          :class="['nav-item', { active: isActive(item.path) }]"
-          @click="navigate(item.path)"
-          text
-        >
-          {{ item.name }}
-        </v-btn>
-      </div>
+    <div class="nav-menu">
+      <v-btn
+        v-for="item in menuItems"
+        :key="item.name"
+        :class="['nav-item', { active: isActive(item.path) }]"
+        @click="navigate(item.path)"
+        text
+      >
+        {{ item.name }}
+      </v-btn>
     </div>
   </v-app-bar>
 </template>
 
 <style scoped>
-/* Center the app bar content */
+/* Ensure the navbar centers all content */
 .navbar {
   display: flex;
-  justify-content: center;
-  padding: 0 1rem;
+  justify-content: center; /* Center the content horizontally */
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
 }
 
-/* Center content within the navbar and apply max width */
-.nav-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  max-width: 1200px; /* Adjust max-width as needed */
-  width: 100%;
-}
-
-/* Title styling */
-.title {
-  font-weight: bold;
-  color: #9d6cff;
-}
-
-/* Navigation menu styling */
+/* Center the nav items container */
 .nav-menu {
   display: flex;
   gap: 1rem;
+  margin: 0 auto;
 }
 
-/* Nav items with active state */
+/* Style for nav items with active state */
 .nav-item {
   color: #9d6cff;
   font-weight: bold;
