@@ -12,7 +12,7 @@ const navigateTo = (path) => {
   <!-- Custom Navbar for Homepage -->
   <v-app-bar app color="white" dense class="homepage-navbar">
     <div class="nav-menu">
-      <v-btn text @click="navigateTo('/dashboard')" class="nav-item">Dashboard</v-btn>
+      <v-btn text @click="navigateTo('/home')" class="nav-item">Home</v-btn>
     </div>
     <v-spacer></v-spacer>
     <v-btn

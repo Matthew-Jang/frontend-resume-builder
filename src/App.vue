@@ -9,7 +9,7 @@ const route = useRoute();
 <template>
   <v-app>
     <!-- Conditionally render the MenuBar only on non-homepage routes -->
-    <MenuBar v-if="route.path !== '/'" />
+    <MenuBar v-if="route.path !== '/' && route.path !== '/login' && route.path !== '/home'" />
 
     <!-- Main Content Area -->
     <v-main>
