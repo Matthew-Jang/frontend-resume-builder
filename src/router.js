@@ -11,6 +11,7 @@ import EditLesson from "./views/EditLesson.vue";
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
 import LoginSignup from "./views/LoginSignup.vue";
+import Education from "./views/Education.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileStep,
+    },
+    {
+      path: '/education',
+      name: 'education',
+      component: Education,
     },
     {
       path: "/edit/:id",
