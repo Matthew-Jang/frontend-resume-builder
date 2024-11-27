@@ -11,7 +11,7 @@ import Login from "./views/Login.vue";
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
 import LoginSignup from "./views/LoginSignup.vue";
-import Experience from "./views/Experience.vue";
+import Experiences from "./views/Experiences.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,9 +44,9 @@ const router = createRouter({
       component: ProfileStep,
     },
     {
-      path: '/experience',
-      name: 'experience',
-      component: Experience,
+      path: '/experiences',
+      name: 'experiences',
+      component: Experiences,
     },
     // {
     //   path: "/edit/:id",
