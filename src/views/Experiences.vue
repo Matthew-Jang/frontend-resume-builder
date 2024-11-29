@@ -24,6 +24,51 @@ const headers = [
   { text: "Actions", value: "actions", sortable: false, width: "150px" },
 ];
 
+const confirmDeleteExperience = async () => {
+  try {
+    console.log("confirm delete: ", experienceToDeleteID);
+
+
+    console.log("course: ", experienceToDeleteID.value);
+    await ExperienceServices.deleteExperience(
+      getUserID(),
+      experienceToDeleteID.value
+    );
+  } catch (error) {
+    console.error("Error deleting experience:", error);
+  }
+  showModal.value = false;
+  fetchExperiences();
+};
+
+const getUserID = () => {
+  user.value = null;
+  user.value = Utils.getStore("user");
+  //console.log("user " + JSON.stringify(user));
+  return user.value.userId;
+};
+
+
+const fetchExperiences = async () => {
+  try {
+    console.log("fetching experiences for user: " + getUserID());
+    
+    const response = await ExperienceServices.getExperiencesForUser(
+      getUserID()
+    );
+    experiences.value = response.data.map((item) => ({
+      ...item,
+      isEditing: false,
+    }));
+
+    console.log(response.data);
+    console.log(JSON.stringify(experiences.value));
+
+  } catch (error) {
+    console.error("Error fetching experiences:", error);
+  }
+};
+
 
 const toggleModal = (inputExperienceToDeleteID) => {
   experienceToDeleteID.value = inputExperienceToDeleteID;
