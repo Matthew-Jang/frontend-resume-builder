@@ -24,6 +24,22 @@ const headers = [
   { text: "Actions", value: "actions", sortable: false, width: "150px" },
 ];
 
+const confirmDeleteExperience = async () => {
+  try {
+    console.log("confirm delete: ", experienceToDeleteID);
+
+
+    console.log("course: ", experienceToDeleteID.value);
+    await ExperienceServices.deleteExperience(
+      getUserID(),
+      experienceToDeleteID.value
+    );
+  } catch (error) {
+    console.error("Error deleting experience:", error);
+  }
+  showModal.value = false;
+  fetchExperiences();
+};
 
 const toggleModal = (inputExperienceToDeleteID) => {
   experienceToDeleteID.value = inputExperienceToDeleteID;
