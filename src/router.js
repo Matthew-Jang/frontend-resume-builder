@@ -1,20 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
-
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
 import LoginSignup from "./views/LoginSignup.vue";
+import Experiences from "./views/Experiences.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-  //   {
-  //    path: "/",
-  //    alias: "/login",
-  //    name: "login",
-  //    component: Login,
-  //  },
     {
       path: '/',
       alias: '/home',
@@ -110,7 +104,6 @@ const router = createRouter({
       path: '/addResumes',
       name: 'addResumes',
       component: AddResumes,
-    },
   ],
 });
 
