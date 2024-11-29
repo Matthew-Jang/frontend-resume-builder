@@ -11,6 +11,11 @@ export default {
   getExperiencesForUser(userId) {
     return apiClient.get(`/${userId}/experiences`);
   },
+  
+  // Delete an experience by ID
+  deleteExperience(userId, experienceId) {
+    return apiClient.delete(`/${userId}/experiences/${experienceId}`);
+  },
 };
 
 
