@@ -9,10 +9,10 @@ const route = useRoute();
 const menuItems = [
   { name: "Templates", path: "/templates" },
   { name: "Profile", path: "/profile" },
-  { name: "Experience", path: "/experience" },
+  { name: "Experience", path: "/experiences" },
   { name: "Skills", path: "/skills" },
-  { name: "Education", path: "/education" },
-  { name: "Contact", path: "/contact" },
+  { name: "Education", path: "/educations" },
+  { name: "Contact", path: "/contacts" },
   { name: "References", path: "/references" },
   { name: "Confirm", path: "/confirm" },
 ];

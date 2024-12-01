@@ -13,9 +13,21 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      alias: '/login',
+      name: 'login', // This defines the "home" route
+      component: Login, 
+    },
+    {
+      path: '/',
       alias: '/home',
       name: 'home', // This defines the "home" route
       component: HomePage, 
+    },
+    {
+      path: '/',
+      alias: '/welcome',
+      name: 'welcome', // This defines the "home" route
+      component: Welcome, 
     },
     // {
     //   path: '/login',
@@ -32,81 +44,81 @@ const router = createRouter({
       name: 'experiences',
       component: Experiences,
     },
-    {
-      path: '/addExperience',
-      name: 'addExperience',
-      component: AddExperience,
-    },
-    {
-      path: '/educations',
-      name: 'educations',
-      component: Educations,
-    },
-    {
-      path: '/addEducation',
-      name: 'addEducation',
-      component: AddEducation,
-    },
-    {
-      path: '/contactInfos',
-      name: 'contactInfos',
-      component: ContactInfos,
-    },
-    {
-      path: '/addContactInfo',
-      name: 'addContactInfo',
-      component: AddContactInfo,
-    },
-    {
-      path: '/certifications',
-      name: 'certifications',
-      component: Certifications,
-    },
-    {
-      path: '/addCertification',
-      name: 'addCertification',
-      component: AddCertification,
-    },
-    {
-      path: '/professionalInfos',
-      name: 'professionalInfos',
-      component: ProfessionalInfos,
-    },
-    {
-      path: '/addProfessionalInfo',
-      name: 'addProfessionalInfo',
-      component: AddProfessionalInfo,
-    },
-    {
-      path: '/projects',
-      name: 'projects',
-      component: Projects,
-    },
-    {
-      path: '/addProjects',
-      name: 'addProjects',
-      component: AddProjects,
-    },
-    {
-      path: '/references',
-      name: 'references',
-      component: References,
-    },
-    {
-      path: '/addReferences',
-      name: 'addReferences',
-      component: AddReferences,
-    },
-    {
-      path: '/resumes',
-      name: 'resumes',
-      component: Resumes,
-    },
-    {
-      path: '/addResumes',
-      name: 'addResumes',
-      component: AddResumes,
-
+    // {
+    //   path: '/addExperience',
+    //   name: 'addExperience',
+    //   component: AddExperience,
+    // },
+    // {
+    //   path: '/educations',
+    //   name: 'educations',
+    //   component: Educations,
+    // },
+    // {
+    //   path: '/addEducation',
+    //   name: 'addEducation',
+    //   component: AddEducation,
+    // },
+    // {
+    //   path: '/contactInfos',
+    //   name: 'contactInfos',
+    //   component: ContactInfos,
+    // },
+    // {
+    //   path: '/addContactInfo',
+    //   name: 'addContactInfo',
+    //   component: AddContactInfo,
+    // },
+    // {
+    //   path: '/certifications',
+    //   name: 'certifications',
+    //   component: Certifications,
+    // },
+    // {
+    //   path: '/addCertification',
+    //   name: 'addCertification',
+    //   component: AddCertification,
+    // },
+    // {
+    //   path: '/professionalInfos',
+    //   name: 'professionalInfos',
+    //   component: ProfessionalInfos,
+    // },
+    // {
+    //   path: '/addProfessionalInfo',
+    //   name: 'addProfessionalInfo',
+    //   component: AddProfessionalInfo,
+    // },
+    // {
+    //   path: '/projects',
+    //   name: 'projects',
+    //   component: Projects,
+    // },
+    // {
+    //   path: '/addProjects',
+    //   name: 'addProjects',
+    //   component: AddProjects,
+    // },
+    // {
+    //   path: '/references',
+    //   name: 'references',
+    //   component: References,
+    // },
+    // {
+    //   path: '/addReferences',
+    //   name: 'addReferences',
+    //   component: AddReferences,
+    // },
+    // {
+    //   path: '/resumes',
+    //   name: 'resumes',
+    //   component: Resumes,
+    // },
+    // {
+    //   path: '/addResumes',
+    //   name: 'addResumes',
+    //   component: AddResumes,
+    // },
   ],
 });
 
