@@ -7,13 +7,12 @@
     "dev": "cross-env APP_ENV=development vite",
     "build": "cross-env APP_ENV=production vite build",
     "preview": "vite preview",
-    "bundle": "mv .env dist",
-    "test": "cypress run",
-    "test:open": "cypress open"
+    "bundle": "mv .env dist"
   },
   "dependencies": {
     "@mdi/font": "^7.0.96",
     "axios": "^1.1.3",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.0.3",
     "eslint": "^8.28.0",
     "eslint-plugin-vue": "^9.7.0",
@@ -28,7 +27,6 @@
     "@mdi/js": "^7.0.96",
     "@vitejs/plugin-vue": "^4.1.0",
     "cross-env": "^7.0.3",
-    "cypress": "^12.9.0",
     "vite": "^4.2.1"
   }
 }
