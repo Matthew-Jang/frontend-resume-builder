@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
+
+import Welcome from "./views/Welcome.vue";
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
 import LoginSignup from "./views/LoginSignup.vue";
@@ -15,11 +17,11 @@ const router = createRouter({
       name: 'home', // This defines the "home" route
       component: HomePage, 
     },
-    {
-      path: '/login',
-      name: 'login', // This defines the "home" route
-      component: LoginSignup,
-    },
+    // {
+    //   path: '/login',
+    //   name: 'login', // This defines the "home" route
+    //   component: LoginSignup,
+    // },
     {
       path: '/profile',
       name: 'profile',
@@ -104,6 +106,7 @@ const router = createRouter({
       path: '/addResumes',
       name: 'addResumes',
       component: AddResumes,
+
   ],
 });
 
