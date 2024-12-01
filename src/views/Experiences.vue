@@ -67,6 +67,26 @@ const fetchExperiences = async () => {
   } catch (error) {
     console.error("Error fetching experiences:", error);
   }
+
+const updateExperience = (item) => {
+  const data = {
+    title: tempEdits.value[item.id].title,
+    employer: tempEdits.value[item.id].employer,
+    description: tempEdits.value[item.id].description,
+    start_date: tempEdits.value[item.id].start_date,
+    end_date: tempEdits.value[item.id].end_date,
+  };
+  console.log(data);
+
+
+  ExperienceServices.updateExperience(user.userId, item.id, data)
+    .then((response) => {
+      console.log("update " + response.data);
+      fetchExperiences();
+    })
+    .catch((e) => {
+      //message.value = e.response.data.message;
+    });
 };
 
 

@@ -16,7 +16,11 @@ export default {
   deleteExperience(userId, experienceId) {
     return apiClient.delete(`/${userId}/experiences/${experienceId}`);
   },
-
+    
+  // Update an experience by ID 
+  updateExperience(userId, experienceId, data) {
+    return apiClient.put(`/${userId}/experiences/${experienceId}`, data);
+  },
 };
 
 
