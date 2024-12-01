@@ -2,42 +2,20 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
 
-// import TutorialsList from "./views/TutorialsList.vue";
-// import EditTutorial from "./views/EditTutorial.vue";
-// import AddTutorial from "./views/AddTutorial.vue";
-// import ViewTutorial from "./views/ViewTutorial.vue";
-// import AddLesson from "./views/AddLesson.vue";
-// import EditLesson from "./views/EditLesson.vue";
+import Welcome from "./views/Welcome.vue";
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
-// import LoginSignup from "./views/LoginSignup.vue";
-
-import Welcome from "./views/Welcome.vue";
+import LoginSignup from "./views/LoginSignup.vue";
+import Experiences from "./views/Experiences.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-     path: "/",
-     alias: "/login",
-     name: "login",
-     component: Login,
-   },
-    {
-      path: "/welcome",
-      name: "welcome",
-      component: Welcome,
-    },
-    // {
-    //   path: "/tutorials",
-    //   name: "tutorials",
-    //   component: TutorialsList,
-    // },
-    {
       path: '/',
       alias: '/home',
       name: 'home', // This defines the "home" route
-      component: HomePage,
+      component: HomePage, 
     },
     // {
     //   path: '/login',
@@ -49,35 +27,86 @@ const router = createRouter({
       name: 'profile',
       component: ProfileStep,
     },
-    // {
-    //   path: "/edit/:id",
-    //   name: "edit",
-    //   component: EditTutorial,
-    //   props: true,
-    // },
-    // {
-    //   path: "/add",
-    //   name: "add",
-    //   component: AddTutorial,
-    // },
-    // {
-    //   path: "/view/:id",
-    //   name: "view",
-    //   component: ViewTutorial,
-    //   props: true,
-    // },
-    // {
-    //   path: "/addLesson/:tutorialId",
-    //   name: "addLesson",
-    //   component: AddLesson,
-    //   props: true,
-    // },
-    // {
-    //   path: "/editLesson/:tutorialId/:lessonId",
-    //   name: "editLesson",
-    //   component: EditLesson,
-    //   props: true,
-    // },
+    {
+      path: '/experiences',
+      name: 'experiences',
+      component: Experiences,
+    },
+    {
+      path: '/addExperience',
+      name: 'addExperience',
+      component: AddExperience,
+    },
+    {
+      path: '/educations',
+      name: 'educations',
+      component: Educations,
+    },
+    {
+      path: '/addEducation',
+      name: 'addEducation',
+      component: AddEducation,
+    },
+    {
+      path: '/contactInfos',
+      name: 'contactInfos',
+      component: ContactInfos,
+    },
+    {
+      path: '/addContactInfo',
+      name: 'addContactInfo',
+      component: AddContactInfo,
+    },
+    {
+      path: '/certifications',
+      name: 'certifications',
+      component: Certifications,
+    },
+    {
+      path: '/addCertification',
+      name: 'addCertification',
+      component: AddCertification,
+    },
+    {
+      path: '/professionalInfos',
+      name: 'professionalInfos',
+      component: ProfessionalInfos,
+    },
+    {
+      path: '/addProfessionalInfo',
+      name: 'addProfessionalInfo',
+      component: AddProfessionalInfo,
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
+    },
+    {
+      path: '/addProjects',
+      name: 'addProjects',
+      component: AddProjects,
+    },
+    {
+      path: '/references',
+      name: 'references',
+      component: References,
+    },
+    {
+      path: '/addReferences',
+      name: 'addReferences',
+      component: AddReferences,
+    },
+    {
+      path: '/resumes',
+      name: 'resumes',
+      component: Resumes,
+    },
+    {
+      path: '/addResumes',
+      name: 'addResumes',
+      component: AddResumes,
+
   ],
 });
 
