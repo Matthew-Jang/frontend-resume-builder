@@ -5,14 +5,12 @@ import dayjs from "dayjs";
 import Utils from "../config/utils";
 import ExperienceServices from "../services/experienceServices";
 
-
 const user = Utils.getStore("user");
 const router = useRouter();
 const experiences = ref([]);
 const showModal = ref(false);
 const experienceToDeleteID = ref(null);
 const tempEdits = ref({});
-
 
 const headers = [
   //   { text: "ID", value: "id", width: "150px" },
@@ -48,7 +46,6 @@ const getUserID = () => {
   return user.value.userId;
 };
 
-
 const fetchExperiences = async () => {
   try {
     console.log("fetching experiences for user: " + getUserID());
@@ -67,6 +64,7 @@ const fetchExperiences = async () => {
   } catch (error) {
     console.error("Error fetching experiences:", error);
   }
+}
 
 const updateExperience = (item) => {
   const data = {
@@ -136,14 +134,14 @@ onMounted(fetchExperiences);
       class="elevation-1"
       style="width: 100%"
     >
-      <template v-slot:item="{ item : experience } ">
+      <template v-slot:item="{ item }">
         <tr>
           <!-- Loop through headers except 'actions' -->
           <td v-for="header in headers" :key="header.value">
             <div v-if="header.value !== 'actions'">
-              <div v-if="experience.isEditing">
+              <div v-if="item.isEditing">
                 <v-text-field
-                  v-model="tempEdits[experience.id][header.value]"
+                  v-model="tempEdits[item.id][header.value]"
                   dense
                   hide-details
                 ></v-text-field>
@@ -154,10 +152,10 @@ onMounted(fetchExperiences);
                     header.value === 'start_date' || header.value === 'end_date'
                   "
                 >
-                  {{ formatDate(experience[header.value]) }}
+                  {{ formatDate(item[header.value]) }}
                 </span>
                 <span v-else>
-                  {{ experience[header.value] }}
+                  {{ item[header.value] }}
                 </span>
               </div>
             </div>
