@@ -17,6 +17,7 @@ const resetMenu = () => {
     initials.value = user.value.fName[0] + user.value.lName[0];
     name.value = user.value.fName + " " + user.value.lName;
   }
+}
 // Define the menu items
 const menuItems = [
   { name: "Templates", path: "/templates" },
@@ -52,6 +53,7 @@ onMounted(() => {
   logoURL.value = ocLogo;
   resetMenu();
 });
+
 </script>
 
 <template>
