@@ -17,6 +17,23 @@ const resetMenu = () => {
     initials.value = user.value.fName[0] + user.value.lName[0];
     name.value = user.value.fName + " " + user.value.lName;
   }
+// Define the menu items
+const menuItems = [
+  { name: "Templates", path: "/templates" },
+  { name: "Profile", path: "/profile" },
+  { name: "Experience", path: "/experiences" },
+  { name: "Skills", path: "/skills" },
+  { name: "Education", path: "/educations" },
+  { name: "Contact", path: "/contacts" },
+  { name: "References", path: "/references" },
+  { name: "Confirm", path: "/confirm" },
+];
+
+// Check if the current route matches the item path
+const isActive = (path) => route.path === path;
+
+const navigate = (path) => {
+  router.push(path);
 };
 
 const logout = () => {

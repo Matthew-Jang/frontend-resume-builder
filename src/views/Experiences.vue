@@ -5,14 +5,12 @@ import dayjs from "dayjs";
 import Utils from "../config/utils";
 import ExperienceServices from "../services/experienceServices";
 
-
 const user = Utils.getStore("user");
 const router = useRouter();
 const experiences = ref([]);
 const showModal = ref(false);
 const experienceToDeleteID = ref(null);
 const tempEdits = ref({});
-
 
 const headers = [
   //   { text: "ID", value: "id", width: "150px" },
@@ -23,6 +21,71 @@ const headers = [
   { text: "End Date", value: "end_date", width: "15%" },
   { text: "Actions", value: "actions", sortable: false, width: "150px" },
 ];
+
+const confirmDeleteExperience = async () => {
+  try {
+    console.log("confirm delete: ", experienceToDeleteID);
+
+
+    console.log("course: ", experienceToDeleteID.value);
+    await ExperienceServices.deleteExperience(
+      getUserID(),
+      experienceToDeleteID.value
+    );
+  } catch (error) {
+    console.error("Error deleting experience:", error);
+  }
+  showModal.value = false;
+  fetchExperiences();
+};
+
+const getUserID = () => {
+  user.value = null;
+  user.value = Utils.getStore("user");
+  //console.log("user " + JSON.stringify(user));
+  return user.value.userId;
+};
+
+const fetchExperiences = async () => {
+  try {
+    console.log("fetching experiences for user: " + getUserID());
+    
+    const response = await ExperienceServices.getExperiencesForUser(
+      getUserID()
+    );
+    experiences.value = response.data.map((item) => ({
+      ...item,
+      isEditing: false,
+    }));
+
+    console.log(response.data);
+    console.log(JSON.stringify(experiences.value));
+
+  } catch (error) {
+    console.error("Error fetching experiences:", error);
+  }
+}
+
+const updateExperience = (item) => {
+  const data = {
+    title: tempEdits.value[item.id].title,
+    employer: tempEdits.value[item.id].employer,
+    description: tempEdits.value[item.id].description,
+    start_date: tempEdits.value[item.id].start_date,
+    end_date: tempEdits.value[item.id].end_date,
+  };
+  console.log(data);
+
+
+  ExperienceServices.updateExperience(user.userId, item.id, data)
+    .then((response) => {
+      console.log("update " + response.data);
+      fetchExperiences();
+    })
+    .catch((e) => {
+      //message.value = e.response.data.message;
+    });
+};
 
 
 const toggleModal = (inputExperienceToDeleteID) => {
@@ -71,14 +134,14 @@ onMounted(fetchExperiences);
       class="elevation-1"
       style="width: 100%"
     >
-      <template v-slot:item="{ item : experience } ">
+      <template v-slot:item="{ item }">
         <tr>
           <!-- Loop through headers except 'actions' -->
           <td v-for="header in headers" :key="header.value">
             <div v-if="header.value !== 'actions'">
-              <div v-if="experience.isEditing">
+              <div v-if="item.isEditing">
                 <v-text-field
-                  v-model="tempEdits[experience.id][header.value]"
+                  v-model="tempEdits[item.id][header.value]"
                   dense
                   hide-details
                 ></v-text-field>
@@ -89,10 +152,10 @@ onMounted(fetchExperiences);
                     header.value === 'start_date' || header.value === 'end_date'
                   "
                 >
-                  {{ formatDate(experience[header.value]) }}
+                  {{ formatDate(item[header.value]) }}
                 </span>
                 <span v-else>
-                  {{ experience[header.value] }}
+                  {{ item[header.value] }}
                 </span>
               </div>
             </div>
