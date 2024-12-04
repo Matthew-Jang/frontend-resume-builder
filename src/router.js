@@ -52,16 +52,16 @@ const router = createRouter({
       name: 'addExperience',
       component: AddExperience,
     },
-    // {
-    //   path: '/educations',
-    //   name: 'educations',
-    //   component: Educations,
-    // },
-    // {
-    //   path: '/addEducation',
-    //   name: 'addEducation',
-    //   component: AddEducation,
-    // },
+    {
+      path: '/educations',
+      name: 'educations',
+      component: Educations,
+    },
+    {
+      path: '/addEducation',
+      name: 'addEducation',
+      component: AddEducation,
+    },
     // {
     //   path: '/contactInfos',
     //   name: 'contactInfos',
