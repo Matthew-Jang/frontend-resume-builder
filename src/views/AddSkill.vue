@@ -4,20 +4,18 @@ import SkillServices from "../services/skillServices.js";
 import Utils from "../config/utils.js";
 import { useRouter } from "vue-router";
 
-
 const router = useRouter();
 const valid = ref(false);
-const user = Utils.getStore("user");
+const user = ref(Utils.getStore("user"));
 const skill = ref({
   id: null,
   skillInfo: "",
 });
 const message = ref("Enter data and click save");
 
-
-const function1 = () =>{
-    const data = {
-    skillInfo: "test",
+const saveSkill = () => {
+  const data = {
+    skillInfo: skill.value.skillInfo,
   };
   SkillServices.addSkill(user.value.userId, data)
     .then((response) => {
@@ -30,27 +28,9 @@ const function1 = () =>{
     });
 };
 
-
-const saveSkill = () => {
-  const data = {
-    skillInfo: skill.value.skillInfo,
-  };
-  SkillServices.addSkill(user.userId, data)
-    .then((response) => {
-      skill.value.id = response.data.id;
-      console.log("add " + response.data);
-      router.push({ name: "skills" });
-    })
-    .catch((e) => {
-      //message.value = e.response.data.message;
-    });
-};
-
-
 const cancel = () => {
   router.push({ name: "skills" });
 };
-
 
 onMounted(() => {
   user.value = Utils.getStore("user");
