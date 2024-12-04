@@ -14,6 +14,7 @@ const menuItems = [
   { name: "Education", path: "/educations" },
   { name: "Contact", path: "/contacts" },
   { name: "References", path: "/references" },
+  { name: "Projects", path: "/projects" },
   { name: "Confirm", path: "/confirm" },
 ];
 
