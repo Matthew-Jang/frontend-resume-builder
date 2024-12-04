@@ -10,6 +10,9 @@ import LoginSignup from "./views/LoginSignup.vue";
 import Experiences from "./views/Experiences.vue";
 import AddExperience from "./views/AddExperience.vue";
 
+import Skills from "./views/Skills.vue";
+import AddSkill from "./views/AddSkill.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -50,6 +53,16 @@ const router = createRouter({
       path: '/addExperience',
       name: 'addExperience',
       component: AddExperience,
+    },
+    {
+      path: '/skills',
+      name: 'skills',
+      component: Skills,
+    },
+    {
+      path: '/addSkill',
+      name: 'addSkill',
+      component: AddSkill,
     },
     // {
     //   path: '/educations',
