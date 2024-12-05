@@ -11,6 +11,7 @@ import AddExperience from "./views/AddExperience.vue";
 import Educations from "./views/Educations.vue";
 import AddEducation from "./views/AddEducation.vue";
 import Projects from "./views/Projects.vue";
+import Certifications from "./views/Certifications.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,11 +74,11 @@ const router = createRouter({
     //   name: 'addContactInfo',
     //   component: AddContactInfo,
     // },
-    // {
-    //   path: '/certifications',
-    //   name: 'certifications',
-    //   component: Certifications,
-    // },
+    {
+      path: '/certifications',
+      name: 'certifications',
+      component: Certifications,
+    },
     // {
     //   path: '/addCertification',
     //   name: 'addCertification',
