@@ -145,10 +145,10 @@ const router = createRouter({
     //   component: AddResumes,
     // },
     {
-            path: '/chatbox',
+      path: '/chatbox',
       name: 'chatbox',
       component: Chatbox,
-
+    },
     {
       path: '/resumes',
       name: 'resumes',
