@@ -10,6 +10,8 @@ import LoginSignup from "./views/LoginSignup.vue";
 import Experiences from "./views/Experiences.vue";
 import AddExperience from "./views/AddExperience.vue";
 
+import Resumes from "./views/Resumes.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -111,16 +113,11 @@ const router = createRouter({
     //   name: 'addReferences',
     //   component: AddReferences,
     // },
-    // {
-    //   path: '/resumes',
-    //   name: 'resumes',
-    //   component: Resumes,
-    // },
-    // {
-    //   path: '/addResumes',
-    //   name: 'addResumes',
-    //   component: AddResumes,
-    // },
+    {
+      path: '/resumes',
+      name: 'resumes',
+      component: Resumes,
+    },
   ],
 });
 
