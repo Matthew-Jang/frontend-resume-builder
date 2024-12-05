@@ -14,7 +14,9 @@ import Projects from "./views/Projects.vue";
 import Certifications from "./views/Certifications.vue";
 import Skills from "./views/Skills.vue";
 import AddSkill from "./views/AddSkill.vue";
-
+import ProfessionalInfos from "./views/ProfessionalInfos.vue";
+import ContactInfos from "./views/ContactInfos.vue";References
+import References from "./views/References.vue";
 import Chatbox from "./views/ChatBox.vue";
 
 import Pdfs from "./views/Pdfs.vue";
@@ -83,67 +85,32 @@ const router = createRouter({
       name: 'addEducation',
       component: AddEducation,
     },
-    // {
-    //   path: '/contactInfos',
-    //   name: 'contactInfos',
-    //   component: ContactInfos,
-    // },
-    // {
-    //   path: '/addContactInfo',
-    //   name: 'addContactInfo',
-    //   component: AddContactInfo,
-    // },
+    {
+      path: '/contactInfos',
+      name: 'contactInfos',
+      component: ContactInfos,
+    },
+    {
+      path: '/professionalInfos',
+      name: 'professionalInfos',
+      component: ProfessionalInfos,
+    },
     {
       path: '/certifications',
       name: 'certifications',
       component: Certifications,
     },
-    // {
-    //   path: '/addCertification',
-    //   name: 'addCertification',
-    //   component: AddCertification,
-    // },
-    // {
-    //   path: '/professionalInfos',
-    //   name: 'professionalInfos',
-    //   component: ProfessionalInfos,
-    // },
-    // {
-    //   path: '/addProfessionalInfo',
-    //   name: 'addProfessionalInfo',
-    //   component: AddProfessionalInfo,
-    // },
+
     {
       path: '/projects',
       name: 'projects',
       component: Projects,
     },
-    // {
-    //   path: '/addProjects',
-    //   name: 'addProjects',
-    //   component: AddProjects,
-    // },
-    // {
-    //   path: '/references',
-    //   name: 'references',
-    //   component: References,
-    // },
-    // {
-    //   path: '/addReferences',
-    //   name: 'addReferences',
-    //   component: AddReferences,
-    // },
-
-    // {
-    //   path: '/resumes',
-    //   name: 'resumes',
-    //   component: Resumes,
-    // },
-    // {
-    //   path: '/addResumes',
-    //   name: 'addResumes',
-    //   component: AddResumes,
-    // },
+    {
+      path: '/references',
+      name: 'references',
+      component: References,
+    },
     {
       path: '/chatbox',
       name: 'chatbox',

@@ -3,14 +3,14 @@ import ocLogo from "/oc-logo-white.png";
 import { ref, onMounted } from "vue";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
-
 import { useRouter, useRoute } from "vue-router";
 
 const user = ref(null);
-const title = ref("Tutorials");
+const title = ref("Resume Builder");
 const initials = ref("");
 const name = ref("");
 const logoURL = ref("");
+const router = useRouter();
 
 const resetMenu = () => {
   user.value = null;
@@ -38,6 +38,8 @@ const logout = () => {
     .catch((error) => {
       console.log("error", error);
     });
+
+    router.push({ name: "login" });
 };
 
 onMounted(() => {
@@ -66,13 +68,15 @@ onMounted(() => {
       <div v-if="user">
         <!-- <v-btn class="mx-2" :to="{ name: 'tutorials' }"> List </v-btn>
         <v-btn class="mx-2" :to="{ name: 'add' }"> Add Tutorial </v-btn> -->
+        <v-btn class="mx-2" :to="{ name: 'profile' }"> Summary </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'contactInfos' }"> contact </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'professionalInfos' }"> links </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'skills' }"> skills </v-btn>
         <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'educations' }"> educations </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'certifications' }"> certifications </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'references' }"> references </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'resumes' }"> resumes </v-btn>
       </div>
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">
         <template v-slot:activator="{ props }">
