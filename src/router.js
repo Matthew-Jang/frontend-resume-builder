@@ -18,7 +18,6 @@ import AddSkill from "./views/AddSkill.vue";
 import ProfessionalInfos from "./views/ProfessionalInfos.vue";
 import ContactInfos from "./views/ContactInfos.vue";References
 import References from "./views/References.vue";
-import References from "./views/References.vue";
 import AddReference from "./views/AddReference.vue";
 import Chatbox from "./views/ChatBox.vue";
 
@@ -118,9 +117,9 @@ const router = createRouter({
     },
 
     {
-      path: '/addReferences',
-      name: 'addReferences',
-      component: AddReferences,
+      path: '/addReference',
+      name: 'addReference',
+      component: AddReference,
     },
 
     {
