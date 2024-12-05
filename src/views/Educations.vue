@@ -183,7 +183,8 @@ onMounted(fetchEducations);
             <div v-if="header.value !== 'actions'">
               <div v-if="item.isEditing">
                 <v-text-field v-if="header.value !== 'degree_type'" v-model="tempEdits[item.education_id][header.value]"
-                  :type="header.value.includes('year') ? 'date' : 'text'" dense hide-details></v-text-field>
+                  :type="header.value.includes('year') ? 'date' : 'text'" dense hide-details
+                  @keyup.enter="updateEducation(item)"></v-text-field>
 
                 <v-select v-else v-model="tempEdits[item.education_id][header.value]"
                   :items="['High School', 'Diploma', 'Associate', 'Bachelor', 'Master', 'Doctorate']" dense hide-details
@@ -237,44 +238,83 @@ onMounted(fetchEducations);
     </v-dialog>
 
     <!-- Modal for Adding or Editing Education -->
-    <v-dialog v-model="showEducationModal" max-width="400">
-      <v-card>
-        <v-card-title v-if="isAdd" class="headline">Add Education!</v-card-title>
-        <v-card-title v-else class="headline">Edit Education!</v-card-title>
-        <v-form ref="form" v-model="valid" lazy validation>
+<v-dialog v-model="showEducationModal" max-width="400">
+  <v-card>
+    <v-card-title v-if="isAdd" class="headline">Add Education!</v-card-title>
+    <v-card-title v-else class="headline">Edit Education!</v-card-title>
+    <v-form ref="form" v-model="valid" @submit.prevent="isAdd ? addEducation() : saveEducationModal()">
+      
+      <!-- Institution -->
+      <v-text-field
+        v-model="selectedEducation.institution"
+        id="institution"
+        label="Institution"
+        :counter="255"
+        required
+        @keyup.enter="isAdd ? addEducation() : saveEducationModal()"
+      ></v-text-field>
 
-          <!-- Institution -->
-          <v-text-field v-model="selectedEducation.institution" id="institution" label="Institution" :counter="255"
-            required></v-text-field>
+      <!-- Major -->
+      <v-text-field
+        v-model="selectedEducation.major"
+        id="major"
+        label="Major"
+        :counter="255"
+        required
+        @keyup.enter="isAdd ? addEducation() : saveEducationModal()"
+      ></v-text-field>
 
-          <!-- Major -->
-          <v-text-field v-model="selectedEducation.major" id="major" label="Major" :counter="255"
-            required></v-text-field>
+      <!-- Degree Type -->
+      <v-select
+        v-model="selectedEducation.degree_type"
+        id="degree_type"
+        label="Degree Type"
+        :items="['High School', 'Diploma', 'Associate', 'Bachelor', 'Master', 'Doctorate']"
+        required
+        @keyup.enter="isAdd ? addEducation() : saveEducationModal()"
+      ></v-select>
 
-          <!-- Degree Type -->
-          <v-select v-model="selectedEducation.degree_type" id="degree_type" label="Degree Type"
-            :items="['High School', 'Diploma', 'Associate', 'Bachelor', 'Master', 'Doctorate']" required></v-select>
+      <!-- Start Year -->
+      <v-text-field
+        v-model="selectedEducation.start_year"
+        id="start_year"
+        label="Start Year"
+        type="date"
+        required
+        @keyup.enter="isAdd ? addEducation() : saveEducationModal()"
+      ></v-text-field>
 
-          <!-- Start Year -->
-          <v-text-field v-model="selectedEducation.start_year" id="start_year" label="Start Year" type="date"
-            required></v-text-field>
+      <!-- End Year -->
+      <v-text-field
+        v-model="selectedEducation.end_year"
+        id="end_year"
+        label="End Year"
+        type="date"
+        required
+        @keyup.enter="isAdd ? addEducation() : saveEducationModal()"
+      ></v-text-field>
 
-          <!-- End Year -->
-          <v-text-field v-model="selectedEducation.end_year" id="end_year" label="End Year" type="date"
-            required></v-text-field>
+      <!-- GPA -->
+      <v-text-field
+        v-model="selectedEducation.gpa"
+        id="gpa"
+        label="GPA"
+        type="number"
+        step="0.01"
+        min="0"
+        max="4.00"
+        required
+        @keyup.enter="isAdd ? addEducation() : saveEducationModal()"
+      ></v-text-field>
 
-          <!-- GPA -->
-          <v-text-field v-model="selectedEducation.gpa" id="gpa" label="GPA" type="number" step="0.01" min="0"
-            max="4.00" required></v-text-field>
-
-          <v-card-actions>
+      <v-card-actions>
             <v-btn v-if="isAdd" color="green" @click="addEducation">Save</v-btn>
             <v-btn v-else color="green" @click="saveEducationModal">Save</v-btn>
             <v-btn color="red" @click="toggleEducationModal">Cancel</v-btn>
           </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
+    </v-form>
+  </v-card>
+</v-dialog>
 
   </v-container>
 </template>
