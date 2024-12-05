@@ -8,7 +8,10 @@ import HomePage from "./views/HomePage.vue";
 import LoginSignup from "./views/LoginSignup.vue";
 import Experiences from "./views/Experiences.vue";
 import AddExperience from "./views/AddExperience.vue";
-
+import Educations from "./views/Educations.vue";
+import AddEducation from "./views/AddEducation.vue";
+import Projects from "./views/Projects.vue";
+import Certifications from "./views/Certifications.vue";
 import Skills from "./views/Skills.vue";
 import AddSkill from "./views/AddSkill.vue";
 
