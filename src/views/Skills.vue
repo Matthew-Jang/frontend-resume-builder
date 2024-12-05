@@ -31,7 +31,7 @@ const confirmDeleteSkill = async () => {
     console.error("Error deleting skill:", error);
   }
   showModal.value = false;
-  fetchExperiences();
+  fetchSkills();
 };
 
 const getUserID = () => {

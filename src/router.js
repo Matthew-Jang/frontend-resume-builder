@@ -14,9 +14,12 @@ import Projects from "./views/Projects.vue";
 import Certifications from "./views/Certifications.vue";
 import Skills from "./views/Skills.vue";
 import AddSkill from "./views/AddSkill.vue";
+
 import ProfessionalInfos from "./views/ProfessionalInfos.vue";
 import ContactInfos from "./views/ContactInfos.vue";References
 import References from "./views/References.vue";
+import References from "./views/References.vue";
+import AddReference from "./views/AddReference.vue";
 import Chatbox from "./views/ChatBox.vue";
 
 import Pdfs from "./views/Pdfs.vue";
@@ -106,11 +109,20 @@ const router = createRouter({
       name: 'projects',
       component: Projects,
     },
+
+
     {
       path: '/references',
       name: 'references',
       component: References,
     },
+
+    {
+      path: '/addReferences',
+      name: 'addReferences',
+      component: AddReferences,
+    },
+
     {
       path: '/chatbox',
       name: 'chatbox',
