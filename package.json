@@ -16,9 +16,12 @@
     "dotenv": "^16.0.3",
     "eslint": "^8.28.0",
     "eslint-plugin-vue": "^9.7.0",
+    "jspdf": "^2.5.2",
     "vite-plugin-vuetify": "^1.0.0",
     "vue": "^3.2.47",
+    "vue-composable": "^1.0.0-beta.24",
     "vue-router": "^4.1.6",
+    "vuedraggable": "^4.1.0",
     "vuetify": "^3.7.4",
     "vuex": "^4.0.2",
     "webfontloader": "^1.6.28"

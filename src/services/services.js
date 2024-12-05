@@ -50,5 +50,4 @@ const apiClient = axios.create({
     return data;
   },
 });
-
-export default apiClient;
+export default apiClient ;
