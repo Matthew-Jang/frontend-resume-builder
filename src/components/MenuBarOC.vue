@@ -20,19 +20,6 @@ const resetMenu = () => {
     name.value = user.value.fName + " " + user.value.lName;
   }
 }
-// Define the menu items
-const menuItems = [
-  { name: "Templates", path: "/templates" },
-  { name: "Profile", path: "/profile" },
-  { name: "Experience", path: "/experiences" },
-  { name: "Skills", path: "/skills" },
-  { name: "Education", path: "/educations" },
-  { name: "Contact", path: "/contacts" },
-  { name: "References", path: "/references" },
-  { name: "Projects", path: "/projects" },
-  { name: "Certifications", path: "/certifications" },
-  { name: "Confirm", path: "/confirm" },
-];
 
 // Check if the current route matches the item path
 const isActive = (path) => route.path === path;
@@ -79,6 +66,12 @@ onMounted(() => {
       <div v-if="user">
         <!-- <v-btn class="mx-2" :to="{ name: 'tutorials' }"> List </v-btn>
         <v-btn class="mx-2" :to="{ name: 'add' }"> Add Tutorial </v-btn> -->
+        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
         <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
       </div>
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">
