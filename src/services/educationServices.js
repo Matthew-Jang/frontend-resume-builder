@@ -4,7 +4,7 @@ export default {
   // Add a new education entry for a specific user
   addEducation(userId, data) {
     console.log("add education services");
-    console.log("user id: " + userId + " data" + data.major);
+    console.log("user id: " + userId + " data: " + data.major);
     
     return apiClient.post(`/educations/${userId}`, data);
   },
@@ -17,6 +17,7 @@ export default {
   
   // Update an education entry by ID 
   updateEducation(userId, educationId, data) {
+    console.log("update education service : " + data.major);
     return apiClient.put(`/educations/${userId}/${educationId}`, data);
   },
 
