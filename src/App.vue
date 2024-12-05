@@ -1,40 +1,14 @@
 <script setup>
-// Import the MenuBar component
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import MenuBar from "./components/MenuBar.vue";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
 </script>
 
 <template>
   <v-app>
-    <!-- Conditionally render the MenuBar only on non-homepage routes -->
-    <MenuBar v-if="route.path !== '/' && route.path !== '/login' && route.path !== '/home'" />
-
-    <!-- Main Content Area -->
+    <MenuBar :key="$route.fullPath" />
     <v-main>
-      <v-container class="py-4" max-width="800px">
-        <router-view />
-      </v-container>
+      <router-view />
     </v-main>
   </v-app>
 </template>
-
-<style scoped>
-/* Ensure the app layout takes full height */
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.v-main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.v-container {
-  margin-top: 20px;
-}
-</style>

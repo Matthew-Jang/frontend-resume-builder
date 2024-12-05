@@ -9,7 +9,6 @@ export default {
 
   // Get all experiences for a specific user
   getExperiencesForUser(userId) {
-    console.log("get experiences for user id: " + userId);
     return apiClient.get(`/experiences/${userId}`);
   },
   
