@@ -14,6 +14,9 @@ import Projects from "./views/Projects.vue";
 import Certifications from "./views/Certifications.vue";
 import Skills from "./views/Skills.vue";
 import AddSkill from "./views/AddSkill.vue";
+import Pdfs from "./views/Pdfs.vue";
+
+import Resumes from "./views/Resumes.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -126,16 +129,16 @@ const router = createRouter({
     //   name: 'addReferences',
     //   component: AddReferences,
     // },
-    // {
-    //   path: '/resumes',
-    //   name: 'resumes',
-    //   component: Resumes,
-    // },
-    // {
-    //   path: '/addResumes',
-    //   name: 'addResumes',
-    //   component: AddResumes,
-    // },
+    {
+      path: '/resumes',
+      name: 'resumes',
+      component: Resumes,
+    },
+    {
+      path: '/pdfs',
+      name: 'pdfs',
+      component: Pdfs,
+    },
   ],
 });
 
