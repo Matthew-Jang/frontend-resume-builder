@@ -4,6 +4,8 @@ import { ref, onMounted } from "vue";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
 
+import { useRouter, useRoute } from "vue-router";
+
 const user = ref(null);
 const title = ref("Tutorials");
 const initials = ref("");
@@ -27,6 +29,8 @@ const menuItems = [
   { name: "Education", path: "/educations" },
   { name: "Contact", path: "/contacts" },
   { name: "References", path: "/references" },
+  { name: "Projects", path: "/projects" },
+  { name: "Certifications", path: "/certifications" },
   { name: "Confirm", path: "/confirm" },
 ];
 
