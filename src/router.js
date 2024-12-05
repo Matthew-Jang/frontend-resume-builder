@@ -66,16 +66,16 @@ const router = createRouter({
       name: 'addSkill',
       component: AddSkill,
     },
-    // {
-    //   path: '/educations',
-    //   name: 'educations',
-    //   component: Educations,
-    // },
-    // {
-    //   path: '/addEducation',
-    //   name: 'addEducation',
-    //   component: AddEducation,
-    // },
+    {
+      path: '/educations',
+      name: 'educations',
+      component: Educations,
+    },
+    {
+      path: '/addEducation',
+      name: 'addEducation',
+      component: AddEducation,
+    },
     // {
     //   path: '/contactInfos',
     //   name: 'contactInfos',
