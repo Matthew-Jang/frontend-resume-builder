@@ -25,9 +25,6 @@ const headers = [
 const confirmDeleteExperience = async () => {
   try {
     console.log("confirm delete: ", experienceToDeleteID);
-
-
-    console.log("course: ", experienceToDeleteID.value);
     await ExperienceServices.deleteExperience(
       getUserID(),
       experienceToDeleteID.value
