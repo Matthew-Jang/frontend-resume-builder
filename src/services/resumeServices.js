@@ -2,9 +2,9 @@ import apiClient from "./services.js";
 
 export default {
   // Create a new resume
-  createResume(data) {
+  createResume(userId, data) {
     console.log("POST request to: /resume-t4/api/resumes", data);
-    return apiClient.post("/resumes", data);
+    return apiClient.post(`/resumes/users/${userId}`, data);
   },
 
   // Get all resumes
