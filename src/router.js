@@ -6,7 +6,6 @@ import Welcome from "./views/Welcome.vue";
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
 import LoginSignup from "./views/LoginSignup.vue";
-
 import Experiences from "./views/Experiences.vue";
 import AddExperience from "./views/AddExperience.vue";
 
@@ -84,11 +83,11 @@ const router = createRouter({
     //   name: 'addContactInfo',
     //   component: AddContactInfo,
     // },
-    // {
-    //   path: '/certifications',
-    //   name: 'certifications',
-    //   component: Certifications,
-    // },
+    {
+      path: '/certifications',
+      name: 'certifications',
+      component: Certifications,
+    },
     // {
     //   path: '/addCertification',
     //   name: 'addCertification',
@@ -104,11 +103,11 @@ const router = createRouter({
     //   name: 'addProfessionalInfo',
     //   component: AddProfessionalInfo,
     // },
-    // {
-    //   path: '/projects',
-    //   name: 'projects',
-    //   component: Projects,
-    // },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
+    },
     // {
     //   path: '/addProjects',
     //   name: 'addProjects',
