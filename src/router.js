@@ -6,9 +6,10 @@ import Welcome from "./views/Welcome.vue";
 import ProfileStep from "./views/ProfileStep.vue";
 import HomePage from "./views/HomePage.vue";
 import LoginSignup from "./views/LoginSignup.vue";
-
 import Experiences from "./views/Experiences.vue";
 import AddExperience from "./views/AddExperience.vue";
+import Educations from "./views/Educations.vue";
+import AddEducation from "./views/AddEducation.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,16 +52,16 @@ const router = createRouter({
       name: 'addExperience',
       component: AddExperience,
     },
-    // {
-    //   path: '/educations',
-    //   name: 'educations',
-    //   component: Educations,
-    // },
-    // {
-    //   path: '/addEducation',
-    //   name: 'addEducation',
-    //   component: AddEducation,
-    // },
+    {
+      path: '/educations',
+      name: 'educations',
+      component: Educations,
+    },
+    {
+      path: '/addEducation',
+      name: 'addEducation',
+      component: AddEducation,
+    },
     // {
     //   path: '/contactInfos',
     //   name: 'contactInfos',
