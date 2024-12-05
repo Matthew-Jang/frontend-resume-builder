@@ -6,8 +6,7 @@ import dns from "dns";
 dns.setDefaultResultOrder("verbatim");
 
 export default () => {
-  const baseURL =
-    process.env.APP_ENV === "development" ? "/" : "/tutorial-frontend-vue3/";
+  const baseURL = "/resume-t4/api";
 
   return defineConfig({
     plugins: [vue(), vuetify({ autoImport: true })],
