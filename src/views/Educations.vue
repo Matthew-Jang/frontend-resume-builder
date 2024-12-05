@@ -8,19 +8,92 @@ import EducationServices from "../services/educationServices";
 const user = ref(Utils.getStore("user"));
 const router = useRouter();
 const educations = ref([]);
+
+const isAdd = ref(false);
 const showModal = ref(false);
+const showEducationModal = ref(false);
+const selectedEducation = ref({});
+const newEducation = ref({
+  institution: "",
+  major: "",
+  degree_type: "",
+  start_year: "",
+  end_year: "",
+  gpa: "",
+});
+
 const educationToDeleteID = ref(null);
 const tempEdits = ref({});
 
 const headers = [
-  { text: "Institution", value: "institution", width: "20%" },
-  { text: "Major", value: "major", width: "15%" },
-  { text: "Degree Type", value: "degree_type", width: "15%" },
-  { text: "GPA", value: "gpa", width: "10%" },
-  { text: "Start Year", value: "start_year", width: "10%" },
-  { text: "End Year", value: "end_year", width: "10%" },
-  { text: "Actions", value: "actions", sortable: false, width: "20%" },
+  { text: "Institution", value: "institution", sortable: true, width: "20%" },
+  { text: "Major", value: "major", sortable: true, width: "15%" },
+  { text: "Degree Type", value: "degree_type", sortable: true, width: "15%" },
+  { text: "GPA", value: "gpa", sortable: true, width: "6%" },
+  { text: "Start Year", value: "start_year", sortable: true, width: "12%" },
+  { text: "End Year", value: "end_year", sortable: true, width: "12%" },
+  { text: "Actions", value: "actions", sortable: false, width: "10%" },
 ];
+
+const toggleEducationModal = () => {
+  showEducationModal.value = !showEducationModal.value;
+};
+
+const addEducationModal = () => {
+  isAdd.value = true;
+  toggleEducationModal();
+  selectedEducation.value = newEducation.value;
+};
+
+const editEducation = (item) => {
+  toggleEducationModal();
+  selectedEducation.value = item;
+};
+
+const addEducation = () => {
+  const data = {
+    institution: selectedEducation.value.institution,
+    major: selectedEducation.value.major,
+    degree_type: selectedEducation.value.degree_type,
+    start_year: selectedEducation.value.start_year,
+    end_year: selectedEducation.value.end_year,
+    gpa: selectedEducation.value.gpa,
+  };
+  EducationServices.addEducation(getUserID(), data)
+    .then((response) => {
+      // selectedEducation.value.id = response.data.id;
+      // router.push({ name: "experiences" });
+    })
+    .catch((e) => {
+      //message.value = e.response.data.message;
+    });
+  showEducationModal.value = false;
+  isAdd.value = false;
+  fetchEducations();
+};
+
+const saveEducationModal = () => {
+  console.log("save education modal: " + selectedEducation.value.id);
+  const data = {
+    institution: selectedEducation.value.institution,
+    major: selectedEducation.value.major,
+    degree_type: selectedEducation.value.degree_type,
+    start_year: selectedEducation.value.start_year,
+    end_year: selectedEducation.value.end_year,
+    gpa: selectedEducation.value.gpa,
+  };
+  console.log(data);
+
+  EducationServices.updateEducation(user.userId, selectedEducation.value.id, data)
+    .then((response) => {
+      console.log("update " + response.data);
+      fetchEducations();
+    })
+    .catch((e) => {
+      //message.value = e.response.data.message;
+    });
+  toggleEducationModal();
+};
 
 const confirmDeleteEducation = async () => {
   try {
@@ -59,7 +132,7 @@ const updateEducation = (item) => {
     end_year: tempEdits.value[item.education_id].end_year,
   };
 
-  EducationServices.updateEducation(user.value.userId, item.education_id, data)
+  EducationServices.updateEducation(user.value.userId, item.id, data)
     .then(() => {
       fetchEducations();
     })
@@ -88,7 +161,8 @@ const cancelEdit = (item) => {
 };
 
 const formatYear = (year) => {
-  return year ? dayjs(`${year}-01-01`).format("YYYY") : "";
+  if (!year) return "";
+  return dayjs(year).format("DD MMMM YYYY"); // e.g., "25 October 2023"
 };
 
 onMounted(fetchEducations);
@@ -100,28 +174,22 @@ onMounted(fetchEducations);
       <v-toolbar-title>Hello! Add or Edit Educations!</v-toolbar-title>
     </v-toolbar>
     <br />
-    <v-btn color="green" class="mr-4" @click="addEducationNav"> Add </v-btn>
-    <v-data-table
-      :headers="headers"
-      :items="educations"
-      :items-per-page="10"
-      class="elevation-1"
-      style="width: 100%"
-    >
+    <v-btn color="green" class="mr-4" @click="addEducationModal"> Add </v-btn>
+    <v-data-table :headers="headers" :items="educations" :items-per-page="10" class="elevation-1" style="width: 100%">
       <template v-slot:item="{ item }">
         <tr>
           <!-- Loop through headers except 'actions' -->
           <td v-for="header in headers" :key="header.value">
             <div v-if="header.value !== 'actions'">
               <div v-if="item.isEditing">
-                <v-text-field
-                  v-model="tempEdits[item.education_id][header.value]"
-                  :type="header.value.includes('year') ? 'number' : 'text'"
-                  dense
-                  hide-details
-                ></v-text-field>
+                <v-text-field v-if="header.value !== 'degree_type'" v-model="tempEdits[item.education_id][header.value]"
+                  :type="header.value.includes('year') ? 'date' : 'text'" dense hide-details></v-text-field>
+
+                <v-select v-else v-model="tempEdits[item.education_id][header.value]"
+                  :items="['High School', 'Diploma', 'Associate', 'Bachelor', 'Master', 'Doctorate']" dense hide-details
+                  label="Degree Type"></v-select>
               </div>
-              <div v-else>
+              <div v-else @click="enableEdit(item)">
                 <span v-if="header.value === 'degree_type'">
                   {{ item[header.value] }}
                 </span>
@@ -144,7 +212,7 @@ onMounted(fetchEducations);
                   <v-btn color="red" @click="cancelEdit(item)">Cancel</v-btn>
                 </template>
                 <template v-else>
-                  <v-btn color="green" @click="enableEdit(item)">Edit</v-btn>
+                  <v-btn color="green" @click="editEducation(item)">Edit</v-btn>
                   <v-btn color="red" @click="toggleModal(item.id)">Delete</v-btn>
                 </template>
               </div>
@@ -167,6 +235,47 @@ onMounted(fetchEducations);
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- Modal for Adding or Editing Education -->
+    <v-dialog v-model="showEducationModal" max-width="400">
+      <v-card>
+        <v-card-title v-if="isAdd" class="headline">Add Education!</v-card-title>
+        <v-card-title v-else class="headline">Edit Education!</v-card-title>
+        <v-form ref="form" v-model="valid" lazy validation>
+
+          <!-- Institution -->
+          <v-text-field v-model="selectedEducation.institution" id="institution" label="Institution" :counter="255"
+            required></v-text-field>
+
+          <!-- Major -->
+          <v-text-field v-model="selectedEducation.major" id="major" label="Major" :counter="255"
+            required></v-text-field>
+
+          <!-- Degree Type -->
+          <v-select v-model="selectedEducation.degree_type" id="degree_type" label="Degree Type"
+            :items="['High School', 'Diploma', 'Associate', 'Bachelor', 'Master', 'Doctorate']" required></v-select>
+
+          <!-- Start Year -->
+          <v-text-field v-model="selectedEducation.start_year" id="start_year" label="Start Year" type="date"
+            required></v-text-field>
+
+          <!-- End Year -->
+          <v-text-field v-model="selectedEducation.end_year" id="end_year" label="End Year" type="date"
+            required></v-text-field>
+
+          <!-- GPA -->
+          <v-text-field v-model="selectedEducation.gpa" id="gpa" label="GPA" type="number" step="0.01" min="0"
+            max="4.00" required></v-text-field>
+
+          <v-card-actions>
+            <v-btn v-if="isAdd" color="green" @click="addEducation">Save</v-btn>
+            <v-btn v-else color="green" @click="saveEducationModal">Save</v-btn>
+            <v-btn color="red" @click="toggleEducationModal">Cancel</v-btn>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
