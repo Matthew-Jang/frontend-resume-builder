@@ -14,6 +14,7 @@ import Projects from "./views/Projects.vue";
 import Certifications from "./views/Certifications.vue";
 import Skills from "./views/Skills.vue";
 import AddSkill from "./views/AddSkill.vue";
+import Pdfs from "./views/Pdfs.vue";
 
 import Resumes from "./views/Resumes.vue";
 
@@ -132,6 +133,11 @@ const router = createRouter({
       path: '/resumes',
       name: 'resumes',
       component: Resumes,
+    },
+    {
+      path: '/pdfs',
+      name: 'pdfs',
+      component: Pdfs,
     },
   ],
 });

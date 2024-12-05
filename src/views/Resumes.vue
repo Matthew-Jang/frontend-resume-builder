@@ -2,9 +2,10 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Utils from "../config/utils";
-import ResumeServices from "../services/resumeServices"; // Service for handling Resume API calls
-import ExperienceServices from "../services/experienceServices"; // Service for Experience API
-import EducationServices from "../services/educationServices"; // Service for Education API
+import ResumeServices from "../services/resumeServices";
+import ExperienceServices from "../services/experienceServices";
+import EducationServices from "../services/educationServices";
+import draggable from "vuedraggable";
 
 const user = Utils.getStore("user");
 const router = useRouter();
@@ -12,20 +13,32 @@ const resumes = ref([]);
 const showModal = ref(false);
 const resumeToDeleteID = ref(null);
 const tempEdits = ref({});
-const drawer = ref(false); // State for hamburger menu drawer
-const selectedItems = ref([]); // Selected items for the resume
+const drawer = ref(false);
+const selectedItems = ref([]); // Track selected items
 
-// Menu items for Experience and Education
+const headers = ref([
+  { text: "Title", align: "start", value: "title" },
+  { text: "Actions", value: "actions" },
+]);
+
 const menuItems = ref({
   experiences: [],
   educations: [],
 });
 
+const draggableLists = ref([
+  { name: "Experiences", key: "experiences" },
+  { name: "Educations", key: "educations" },
+]);
+
 // Fetch experiences
 const fetchExperiences = async () => {
   try {
     const response = await ExperienceServices.getExperiencesForUser(user.userId);
-    menuItems.value.experiences = response.data;
+    menuItems.value.experiences = response.data.map((item) => ({
+      ...item,
+      selected: false, // Add selection state
+    }));
   } catch (error) {
     console.error("Error fetching experiences:", error);
   }
@@ -35,25 +48,13 @@ const fetchExperiences = async () => {
 const fetchEducations = async () => {
   try {
     const response = await EducationServices.getEducationsForUser(user.userId);
-    menuItems.value.educations = response.data;
+    menuItems.value.educations = response.data.map((item) => ({
+      ...item,
+      selected: false, // Add selection state
+    }));
   } catch (error) {
     console.error("Error fetching educations:", error);
   }
-};
-
-// Toggle selection of an item
-const toggleSelection = (item) => {
-  const index = selectedItems.value.findIndex((selected) => selected.id === item.id);
-  if (index === -1) {
-    selectedItems.value.push(item);
-  } else {
-    selectedItems.value.splice(index, 1);
-  }
-};
-
-// Check if an item is selected
-const isSelected = (item) => {
-  return selectedItems.value.some((selected) => selected.id === item.id);
 };
 
 // Fetch resumes
@@ -69,21 +70,21 @@ const fetchResumes = async () => {
   }
 };
 
-// Update resume
-const updateResume = (item) => {
-  const data = { title: tempEdits.value[item.id].title };
-
-  ResumeServices.updateResume(item.id, data)
-    .then(() => {
-      fetchResumes();
-    })
-    .catch((error) => console.error("Error updating resume:", error));
+const generatePDFNav = () => {
+  router.push({ name: "pdfs" });
 };
 
-// Fetch resumes on mount
-onMounted(fetchResumes);
-onMounted(fetchExperiences);
-onMounted(fetchEducations);
+// Fetch data on mount
+onMounted(() => {
+  fetchResumes();
+  fetchExperiences();
+  fetchEducations();
+});
+
+// Handle list reordering
+const updateListOrder = (newOrder) => {
+  draggableLists.value = [...newOrder];
+};
 </script>
 
 <template>
@@ -94,9 +95,8 @@ onMounted(fetchEducations);
         <v-icon>mdi-menu</v-icon>
       </v-btn>
       <v-toolbar-title>Resumes</v-toolbar-title>
+      <v-btn color="green" class="mr-4" @click="generatePDFNav"> Generate PDF </v-btn>
     </v-toolbar>
-    <br />
-    <v-btn color="green" class="mr-4" @click="addResume">Add Resume</v-btn>
 
     <!-- Data Table -->
     <v-data-table
@@ -104,7 +104,6 @@ onMounted(fetchEducations);
       :items="resumes"
       :items-per-page="10"
       class="elevation-1"
-      style="width: 100%"
     >
       <template v-slot:item="{ item }">
         <tr>
@@ -138,86 +137,57 @@ onMounted(fetchEducations);
       </template>
     </v-data-table>
 
-    <!-- Delete Confirmation Modal -->
-    <v-dialog v-model="showModal" max-width="400">
-      <v-card>
-        <v-card-title class="headline">Confirm Deletion</v-card-title>
-        <v-card-text>Are you sure you want to delete this resume?</v-card-text>
-        <v-card-actions>
-          <v-btn color="green" @click="showModal = false">Cancel</v-btn>
-          <v-btn color="red" @click="confirmDeleteResume()">Delete</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
     <!-- Hamburger Menu Drawer -->
     <v-navigation-drawer v-model="drawer" app>
-      <v-list>
-        <v-list-item-group>
-          <!-- Experience Dropdown -->
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Experience</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-list-item-action>
-          </v-list-item>
-          <v-list>
-            <v-list-item
-              v-for="item in menuItems.experience"
-              :key="item.id"
-              @click="toggleSelection(item)"
-            >
-              <v-checkbox
-                :value="isSelected(item)"
-                @click.stop="toggleSelection(item)"
-                label="item.title"
-              ></v-checkbox>
-              <v-list-item-content>{{ item.title }}</v-list-item-content>
-            </v-list-item>
-          </v-list>
-
-          <!-- Education Dropdown -->
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Education</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-list-item-action>
-          </v-list-item>
-          <v-list>
-            <v-list-item
-              v-for="item in menuItems.education"
-              :key="item.id"
-              @click="toggleSelection(item)"
-            >
-              <v-checkbox
-                :value="isSelected(item)"
-                @click.stop="toggleSelection(item)"
-                label="item.title"
-              ></v-checkbox>
-              <v-list-item-content>{{ item.title }}</v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-list-item-group>
-      </v-list>
+      <draggable v-model="draggableLists" @end="updateListOrder" class="draggable-list">
+        <template #item="{ element }">
+          <v-card class="mb-2" outlined>
+            <v-row align="center">
+              <v-col cols="1" class="drag-handle">
+                <v-icon>mdi-drag</v-icon>
+              </v-col>
+              <v-col>
+                <h3>{{ element.name }}</h3>
+                <v-list>
+                  <v-list-item
+                    v-for="(item, index) in menuItems[element.key]"
+                    :key="index"
+                  >
+                    <v-list-item-content>
+                      <v-list-item-title>{{ item.title || "Untitled" }}</v-list-item-title>
+                      <v-list-item-subtitle>
+                        {{ item.description || item.institution || "No details available" }}
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-col>
+            </v-row>
+          </v-card>
+        </template>
+      </draggable>
     </v-navigation-drawer>
   </v-container>
 </template>
+
 <style scoped>
-.v-data-table {
-  width: 100%;
+.v-card {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
 }
 
-.button-group {
-  display: flex;
-  justify-content: flex-end;
+.draggable-list {
+  padding: 0;
+  list-style: none;
 }
 
-.button-group .v-btn {
-  margin-right: 10px;
-  width: 95px;
+.drag-handle {
+  cursor: grab;
+}
+
+.mb-2 {
+  margin-bottom: 8px;
 }
 </style>
