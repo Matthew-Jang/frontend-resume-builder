@@ -28,7 +28,7 @@ const navigateTo = (path) => {
   <div class="homepage-content">
     <h1>Build a resume in 8 easy steps!</h1>
     <div class="buttons-container">
-      <v-btn class="create-resume-button" @click="navigateTo('/create-resume')">Create Resume</v-btn>
+      <v-btn class="create-resume-button" @click="navigateTo('/profile')">Create Resume</v-btn>
       <v-btn class="your-resumes-button" outlined @click="navigateTo('/your-resumes')">Your Resumes</v-btn>
     </div>
   </div>
