@@ -5,6 +5,11 @@ import Utils from "../config/utils";
 import ResumeServices from "../services/resumeServices";
 import ExperienceServices from "../services/experienceServices";
 import EducationServices from "../services/educationServices";
+import CertificationServices from "../services/certificationServices";
+import ReferenceServices from "../services/referenceServices";
+import ContactInfoServices from "../services/contactInfoServices";
+import ProfessionalInfoServices from "../services/professionalInfoServices";
+import SkillServices from "../services/skillServices";
 import draggable from "vuedraggable";
 
 const user = Utils.getStore("user");
@@ -14,7 +19,6 @@ const showModal = ref(false);
 const resumeToDeleteID = ref(null);
 const tempEdits = ref({});
 const drawer = ref(false);
-const selectedItems = ref([]); // Track selected items
 
 const headers = ref([
   { text: "Title", align: "start", value: "title" },
@@ -24,11 +28,21 @@ const headers = ref([
 const menuItems = ref({
   experiences: [],
   educations: [],
+  certifications: [],
+  references: [],
+  contacts: [],
+  links: [],
+  skills: [],
 });
 
 const draggableLists = ref([
   { name: "Experiences", key: "experiences" },
   { name: "Educations", key: "educations" },
+  { name: "Certifications", key: "certifications" },
+  { name: "References", key: "references" },
+  { name: "Contacts", key: "contacts" },
+  { name: "Links", key: "links" },
+  { name: "Skills", key: "skills" },
 ]);
 
 // Fetch experiences
@@ -37,7 +51,7 @@ const fetchExperiences = async () => {
     const response = await ExperienceServices.getExperiencesForUser(user.userId);
     menuItems.value.experiences = response.data.map((item) => ({
       ...item,
-      selected: false, // Add selection state
+      selected: false,
     }));
   } catch (error) {
     console.error("Error fetching experiences:", error);
@@ -50,10 +64,75 @@ const fetchEducations = async () => {
     const response = await EducationServices.getEducationsForUser(user.userId);
     menuItems.value.educations = response.data.map((item) => ({
       ...item,
-      selected: false, // Add selection state
+      selected: false,
     }));
   } catch (error) {
     console.error("Error fetching educations:", error);
+  }
+};
+
+// Fetch certifications
+const fetchCertifications = async () => {
+  try {
+    const response = await CertificationServices.getCertificationsForUser(user.userId);
+    menuItems.value.certifications = response.data.map((item) => ({
+      ...item,
+      selected: false,
+    }));
+  } catch (error) {
+    console.error("Error fetching certifications:", error);
+  }
+};
+
+// Fetch references
+const fetchReferences = async () => {
+  try {
+    const response = await ReferenceServices.getReferencesForUser(user.userId);
+    menuItems.value.references = response.data.map((item) => ({
+      ...item,
+      selected: false,
+    }));
+  } catch (error) {
+    console.error("Error fetching references:", error);
+  }
+};
+
+// Fetch contacts
+const fetchContacts = async () => {
+  try {
+    const response = await ContactInfoServices.getContactsForUser(user.userId);
+    menuItems.value.contacts = response.data.map((item) => ({
+      ...item,
+      selected: false,
+    }));
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+  }
+};
+
+// Fetch links
+const fetchLinks = async () => {
+  try {
+    const response = await ProfessionalInfoServices.getProfessionalInfoForUser(user.userId);
+    menuItems.value.links = response.data.map((item) => ({
+      ...item,
+      selected: false,
+    }));
+  } catch (error) {
+    console.error("Error fetching professional info links:", error);
+  }
+};
+
+// Fetch skills
+const fetchSkills = async () => {
+  try {
+    const response = await SkillServices.getSkillsForUser(user.userId);
+    menuItems.value.skills = response.data.map((item) => ({
+      ...item,
+      selected: false,
+    }));
+  } catch (error) {
+    console.error("Error fetching skills:", error);
   }
 };
 
@@ -74,11 +153,16 @@ const generatePDFNav = () => {
   router.push({ name: "pdfs" });
 };
 
-// Fetch data on mount
+// Fetch all entities on mount
 onMounted(() => {
   fetchResumes();
   fetchExperiences();
   fetchEducations();
+  fetchCertifications();
+  fetchReferences();
+  fetchContacts();
+  fetchLinks();
+  fetchSkills();
 });
 
 // Handle list reordering
@@ -154,9 +238,9 @@ const updateListOrder = (newOrder) => {
                     :key="index"
                   >
                     <v-list-item-content>
-                      <v-list-item-title>{{ item.title || "Untitled" }}</v-list-item-title>
+                      <v-list-item-title>{{ item.title || item.name || "Untitled" }}</v-list-item-title>
                       <v-list-item-subtitle>
-                        {{ item.description || item.institution || "No details available" }}
+                        {{ item.description || item.institution || item.relationship || item.link || "No details available" }}
                       </v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>

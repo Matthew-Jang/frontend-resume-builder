@@ -75,7 +75,7 @@ onMounted(() => {
         <v-btn class="mx-2" :to="{ name: 'experiences' }"> Experiences </v-btn>
         <v-btn class="mx-2" :to="{ name: 'educations' }"> educations </v-btn>
         <v-btn class="mx-2" :to="{ name: 'certifications' }"> certifications </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'references' }"> references </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'chatbox' }"> ai </v-btn>
         <v-btn class="mx-2" :to="{ name: 'resumes' }"> resumes </v-btn>
       </div>
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">

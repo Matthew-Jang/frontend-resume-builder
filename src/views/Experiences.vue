@@ -27,10 +27,10 @@ const tempEdits = ref({});
 const headers = [
   //   { text: "ID", value: "id", width: "150px" },
   { text: "Title", value: "title", sortable: true, width: "15%" },
-  { text: "Employer", value: "employer",sortable: true, width: "15%" },
-  { text: "Start Date", value: "start_date",sortable: true, width: "15%" },
-  { text: "End Date", value: "end_date",sortable: true, width: "15%" },
-  { text: "Description", value: "description",sortable: true, width: "40%" },
+  { text: "Employer", value: "employer", sortable: true, width: "15%" },
+  { text: "Start Date", value: "start_date", sortable: true, width: "15%" },
+  { text: "End Date", value: "end_date", sortable: true, width: "15%" },
+  { text: "Description", value: "description", sortable: true, width: "40%" },
   { text: "Actions", value: "actions", sortable: false, width: "150px" },
 ];
 
@@ -128,7 +128,7 @@ const saveExperienceModal = () => {
     .catch((e) => {
       //message.value = e.response.data.message;
     });
-    toggleExperienceModal();
+  toggleExperienceModal();
 };
 
 const updateExperience = (item) => {
@@ -162,7 +162,7 @@ const addExperienceNav = () => {
 
 const enableEdit = (item) => {
   item.isEditing = true;
-  tempEdits.value[item.id] = { ...item}; //menu: false???
+  tempEdits.value[item.id] = { ...item }; //menu: false???
 };
 
 const cancelEdit = (item) => {
@@ -183,7 +183,7 @@ onMounted(fetchExperiences);
       <v-toolbar-title>Hello! Add or Edit Experiences!</v-toolbar-title>
     </v-toolbar>
     <br />
-        <v-btn color="green" class="mr-4" @click="addExperienceModal"> Add </v-btn>
+    <v-btn color="green" class="mr-4" @click="addExperienceModal"> Add </v-btn>
     <!-- <v-btn color="green" class="mr-4" @click="addExperienceNav"> Add </v-btn> -->
     <!-- <v-btn color="green" class="mr-4" @click="addExperienceModal"> Add Modal </v-btn> -->
     <v-data-table :headers="headers" :items="experiences" :items-per-page="10" class="elevation-1" style="width: 100%">
@@ -193,10 +193,9 @@ onMounted(fetchExperiences);
           <td v-for="header in headers" :key="header.value">
             <div v-if="header.value !== 'actions'">
               <div v-if="item.isEditing">
-                <v-text-field v-if="header.value === 'start_date' || header.value === 'end_date'" 
-                v-model="tempEdits[item.id][header.value]"
-                type="date" dense hide-details ></v-text-field>
-                  
+                <v-text-field v-if="header.value === 'start_date' || header.value === 'end_date'"
+                  v-model="tempEdits[item.id][header.value]" type="date" dense hide-details></v-text-field>
+
                 <v-text-field v-else v-model="tempEdits[item.id][header.value]" dense hide-details
                   @keyup.enter="updateExperience(item)"></v-text-field>
               </div>
@@ -254,23 +253,23 @@ onMounted(fetchExperiences);
         <v-form ref="form" v-model="valid" lazy validation>
 
           <!-- title -->
-          <v-text-field v-model="selectedExperience.title" id="title" :counter="50" label="Title"
-            required></v-text-field>
+          <v-text-field v-model="selectedExperience.title" id="title" :counter="50" label="Title" required
+            @keyup.enter="isAdd ? addExperience() : saveExperienceModal()"></v-text-field>
 
           <!-- Employer -->
-          <v-text-field v-model="selectedExperience.employer" id="employer" label="Employer" :counter="50"
-            required></v-text-field>
+          <v-text-field v-model="selectedExperience.employer" id="employer" label="Employer" :counter="50" required
+            @keyup.enter="isAdd ? addExperience() : saveExperienceModal()"></v-text-field>
 
           <!-- Start Date -->
-          <v-text-field v-model="selectedExperience.start_date" id="start_date" label="Start Date" type="date"
-            required></v-text-field>
+          <v-text-field v-model="selectedExperience.start_date" id="start_date" label="Start Date" type="date" required
+            @keyup.enter="isAdd ? addExperience() : saveExperienceModal()"></v-text-field>
 
           <!-- End Date -->
-          <v-text-field v-model="selectedExperience.end_date" id="end_date" label="End Date" type="date"
-            required></v-text-field>
+          <v-text-field v-model="selectedExperience.end_date" id="end_date" label="End Date" type="date" required
+            @keyup.enter="isAdd ? addExperience() : saveExperienceModal()"></v-text-field>
 
           <v-text-field v-model="selectedExperience.description" id="description" :counter="50" label="Description"
-            required></v-text-field>
+            required @keyup.enter="isAdd ? addExperience() : saveExperienceModal()"></v-text-field>
 
           <v-card-actions>
             <v-btn v-if="isAdd" color="green" @click="addExperience">Save</v-btn>
