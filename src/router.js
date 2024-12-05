@@ -12,6 +12,8 @@ import Educations from "./views/Educations.vue";
 import AddEducation from "./views/AddEducation.vue";
 import Projects from "./views/Projects.vue";
 import Certifications from "./views/Certifications.vue";
+import Skills from "./views/Skills.vue";
+import AddSkill from "./views/AddSkill.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,6 +55,16 @@ const router = createRouter({
       path: '/addExperience',
       name: 'addExperience',
       component: AddExperience,
+    },
+    {
+      path: '/skills',
+      name: 'skills',
+      component: Skills,
+    },
+    {
+      path: '/addSkill',
+      name: 'addSkill',
+      component: AddSkill,
     },
     {
       path: '/educations',
