@@ -3,35 +3,36 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import dayjs from "dayjs";
 import Utils from "../config/utils";
-import SkillServices from "../services/skillServices";
+import ReferenceServices from "../services/referenceServices";
 
 const user = Utils.getStore("user");
 const router = useRouter();
-const skills = ref([]);
+const references = ref([]);
 const showModal = ref(false);
-const skillToDeleteID = ref(null);
+const referenceToDeleteID = ref(null);
 const tempEdits = ref({});
 
 const headers = [
   //   { text: "ID", value: "id", width: "150px" },
-  { text: "Skill", value: "skillInfo", width: "15%" },
+  { text: "Reference", value: "referenceName", width: "15%" },
+  { text: "Relationship", value: "relationship", width: "15%" },
 ];
 
-const confirmDeleteSkill = async () => {
+const confirmDeleteReference = async () => {
   try {
-    console.log("confirm delete: ", skillToDeleteID);
+    console.log("confirm delete: ", referenceToDeleteID);
 
 
-    console.log("course: ", skillToDeleteID.value);
-    await SkillServices.deleteSkill(
+    console.log("course: ", referenceToDeleteID.value);
+    await ReferenceServices.deleteReference(
       getUserID(),
-      skillToDeleteID.value
+      referenceToDeleteID.value
     );
   } catch (error) {
     console.error("Error deleting skill:", error);
   }
   showModal.value = false;
-  fetchSkills();
+  fetchReferences();
 };
 
 const getUserID = () => {
@@ -41,37 +42,38 @@ const getUserID = () => {
   return user.value.userId;
 };
 
-const fetchSkills = async () => {
+const fetchReferences = async () => {
   try {
-    console.log("fetching skills for user: " + getUserID());
+    console.log("fetching References for user: " + getUserID());
     
-    const response = await SkillServices.getSkillsForUser(
+    const response = await ReferenceServices.getReferencesForUser(
       getUserID()
     );
-    skills.value = response.data.map((item) => ({
+    references.value = response.data.map((item) => ({
       ...item,
       isEditing: false,
     }));
 
     console.log(response.data);
-    console.log(JSON.stringify(skills.value));
+    console.log(JSON.stringify(references.value));
 
   } catch (error) {
-    console.error("Error fetching skills:", error);
+    console.error("Error fetching References:", error);
   }
 }
 
-const updateSkill = (item) => {
+const updateReference = (item) => {
   const data = {
-    skillInfo: tempEdits.value[item.id].skillInfo,
+    referenceName: tempEdits.value[item.id].referenceName,
+    relationship: tempEdits.value[item.id].relationship,
   };
   console.log(data);
 
 
-  SkillServices.updateSkill(user.userId, item.id, data)
+  ReferenceServices.updateReference(user.userId, item.id, data)
     .then((response) => {
       console.log("update " + response.data);
-      fetchSkills();
+      fetchReferences();
     })
     .catch((e) => {
       //message.value = e.response.data.message;
@@ -79,14 +81,14 @@ const updateSkill = (item) => {
 };
 
 
-const toggleModal = (inputSkillToDeleteID) => {
-  skillToDeleteID.value = inputSkillToDeleteID;
+const toggleModal = (inputReferenceToDeleteID) => {
+  referencesToDeleteID.value = inputReferenceToDeleteID;
   showModal.value = !showModal.value;
 };
 
 
-const addSkillNav = () => {
-  router.push({ name: "addSkill" });
+const addReferenceNav = () => {
+  router.push({ name: "addReference" });
 };
 
 
@@ -107,20 +109,20 @@ const formatDate = (dateString) => {
 };
 
 
-onMounted(fetchSkills);
+onMounted(fetchReferences);
 </script>
 
 
 <template>
   <v-container>
     <v-toolbar>
-      <v-toolbar-title>Hello! Add or Edit Skills!</v-toolbar-title>
+      <v-toolbar-title>Hello! Add or Edit References!</v-toolbar-title>
     </v-toolbar>
     <br />
     <v-btn color="green" class="mr-4" @click="addSkillNav"> Add </v-btn>
     <v-data-table
       :headers="headers"
-      :items="skills"
+      :items="references"
       :items-per-page="10"
       class="elevation-1"
       style="width: 100%"
@@ -179,7 +181,7 @@ onMounted(fetchSkills);
       <v-card>
         <v-card-title class="headline">Confirm Deletion</v-card-title>
         <v-card-text>
-          Are you sure you want to delete this skill?
+          Are you sure you want to delete this reference?
         </v-card-text>
         <v-card-actions>
           <v-btn color="green" @click="showModal = false">Cancel</v-btn>

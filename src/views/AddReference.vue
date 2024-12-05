@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import SkillServices from "../services/skillServices";
+import ReferenceServices from "../services/referenceServices";
 import Utils from "../config/utils.js";
 import { useRouter } from "vue-router";
 
@@ -8,22 +8,24 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const valid = ref(false);
 const user = Utils.getStore("user");
-const skill = ref({
+const reference = ref({
   id: null,
-  skillInfo: "",
+  referenceName: "",
+  relationship: "",
 });
 const message = ref("Enter data and click save");
 
 
 const function1 = () =>{
     const data = {
-    skillInfo: "test",
+    referenceName: "test",
+    relationship: "test",
   };
-  SkillServices.addSkill(user.value.userId, data)
+  ReferenceServices.addReference(user.value.userId, data)
     .then((response) => {
-      skill.value.id = response.data.id;
+      reference.value.id = response.data.id;
       console.log("add " + response.data);
-      router.push({ name: "skills" });
+      router.push({ name: "references" });
     })
     .catch((e) => {
       //message.value = e.response.data.message;
@@ -31,15 +33,16 @@ const function1 = () =>{
 };
 
 
-const saveSkill = () => {
+const saveReference = () => {
   const data = {
-    skillInfo: skill.value.skillInfo,
+    referenceName: reference.value.referenceName,
+    relationship: reference.value.relationship,
   };
-  SkillServices.addSkill(user.userId, data)
+  ReferenceServices.addReference(user.userId, data)
     .then((response) => {
-      skill.value.id = response.data.id;
+      reference.value.id = response.data.id;
       console.log("add " + response.data);
-      router.push({ name: "skills" });
+      router.push({ name: "references" });
     })
     .catch((e) => {
       //message.value = e.response.data.message;
@@ -48,7 +51,7 @@ const saveSkill = () => {
 
 
 const cancel = () => {
-  router.push({ name: "skills" });
+  router.push({ name: "references" });
 };
 
 
@@ -62,7 +65,7 @@ onMounted(() => {
   <div>
     <v-container>
       <v-toolbar>
-        <v-toolbar-title>Skill Add</v-toolbar-title>
+        <v-toolbar-title>Reference Add</v-toolbar-title>
       </v-toolbar>
 
 
@@ -71,18 +74,29 @@ onMounted(() => {
       <br />
       <v-form ref="form" v-model="valid" lazy validation>
         <v-text-field
-          v-model="experience.title"
-          id="skillInfo"
+          v-model="reference.referenceName"
+          id="referenceName"
           :counter="50"
-          label="Skill"
+          label="Name"
           required
         ></v-text-field>
+
+
+        <!-- Employer -->
+        <v-text-field
+          v-model="reference.relationship"
+          id="relationship"
+          label="Relationship"
+          :counter="50"
+          required
+        ></v-text-field>
+
 
         <v-btn
           :disabled="!valid"
           color="success"
           class="mr-4"
-          @click="saveSkill"
+          @click="saveReference"
         >
           Save
         </v-btn>
